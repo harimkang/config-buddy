@@ -103,10 +103,10 @@ config.yaml
 ## 🛣️ Roadmap
 
 - [ ] CLI interface
-- [ ] Web dashboard (visualization/comparison)
-- [ ] Git integration
+- [ ] PyPi Upload
 - [ ] Comment preservation
 - [ ] XML/TOML support
+- [ ] Web dashboard (visualization/comparison)
 
 ## 🤝 Contributing
 
