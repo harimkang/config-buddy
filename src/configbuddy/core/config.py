@@ -1,13 +1,15 @@
 # Copyright (c) 2024 Harim Kang
 # SPDX-License-Identifier: MIT
 
+import configparser
+import json
 from pathlib import Path
 from typing import Any
+
 import yaml
-import json
-import configparser
-from .visualizer import TreeVisualizer
+
 from .types import ConfigDiff, MergeConflict
+from .visualizer import TreeVisualizer
 
 
 class Config:
@@ -111,9 +113,7 @@ class Config:
         """
         return self._visualizer.to_string(self)
 
-    def merge_with(
-        self, config: "Config", strategy: str = "deep"
-    ) -> tuple["Config", list[MergeConflict]]:
+    def merge_with(self, config: "Config", strategy: str = "deep") -> tuple["Config", list[MergeConflict]]:
         """Merge this configuration with another using ConfigMerger.
 
         A convenience method that uses ConfigMerger to merge this configuration
@@ -141,3 +141,17 @@ class Config:
         from .merger import ConfigMerger
 
         return ConfigMerger.merge([self, config], strategy)
+
+    def validate(self, schema_path: str | Path) -> list[str] | None:
+        """Validate configuration against a JSON schema.
+
+        Args:
+            schema_path: Path to the JSON schema file.
+
+        Returns:
+            List of validation errors or None if no errors are found.
+        """
+        from .validator import ConfigValidator
+
+        validator = ConfigValidator.from_file(schema_path)
+        return validator.validate(self)

@@ -1,10 +1,12 @@
-import pytest
-from pathlib import Path
 import json
-import jsonschema
 import tempfile
-from configbuddy.core.validator import ConfigValidator
+from pathlib import Path
+
+import jsonschema
+import pytest
+
 from configbuddy.core.config import Config
+from configbuddy.core.validator import ConfigValidator
 
 
 class TestConfigValidator:
@@ -202,9 +204,7 @@ class TestConfigValidator:
         validator = ConfigValidator(schema)
 
         # Valid: both present
-        valid_config = Config(
-            {"credit_card": "1234-5678", "billing_address": "123 Main St"}
-        )
+        valid_config = Config({"credit_card": "1234-5678", "billing_address": "123 Main St"})
         assert validator.validate(valid_config) is None
 
         # Valid: neither present
@@ -430,9 +430,7 @@ class TestConfigValidator:
             assert props["scale"]["type"] in {"boolean", "string"}
 
         # Verify that we have both boolean and string types for scale
-        scale_types = {
-            schema["properties"]["scale"]["type"] for schema in param_schemas
-        }
+        scale_types = {schema["properties"]["scale"]["type"] for schema in param_schemas}
         assert scale_types == {"boolean", "string"}
 
     def test_generate_schema_with_empty_config(self):

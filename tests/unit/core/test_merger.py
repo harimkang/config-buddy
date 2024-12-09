@@ -1,7 +1,9 @@
-import pytest
 from pathlib import Path
-from configbuddy.core.merger import ConfigMerger
+
+import pytest
+
 from configbuddy.core.config import Config
+from configbuddy.core.merger import ConfigMerger
 
 
 class TestConfigMerger:
@@ -54,17 +56,13 @@ class TestConfigMerger:
 
     def test_deep_merge_two_configs(self, base_config, override_config):
         """Test deep merging of two configurations."""
-        merged, conflicts = ConfigMerger.merge(
-            [base_config, override_config], strategy="deep"
-        )
+        merged, conflicts = ConfigMerger.merge([base_config, override_config], strategy="deep")
 
         # Check merged result
         result = merged.to_dict()
         assert result["database"]["host"] == "127.0.0.1"  # Takes override value
         assert result["database"]["port"] == 5432  # Unchanged value
-        assert (
-            result["database"]["credentials"]["username"] == "root"
-        )  # Takes override value
+        assert result["database"]["credentials"]["username"] == "root"  # Takes override value
         assert "cache" in result  # Added section exists
         assert "logging" in result  # Original section remains
 
@@ -76,15 +74,11 @@ class TestConfigMerger:
 
     def test_shallow_merge_two_configs(self, base_config, override_config):
         """Test shallow merging of two configurations."""
-        merged, conflicts = ConfigMerger.merge(
-            [base_config, override_config], strategy="shallow"
-        )
+        merged, conflicts = ConfigMerger.merge([base_config, override_config], strategy="shallow")
 
         # Check merged result
         result = merged.to_dict()
-        assert (
-            result["database"] == override_config.data["database"]
-        )  # Takes entire override section
+        assert result["database"] == override_config.data["database"]  # Takes entire override section
         assert "cache" in result  # Added section exists
         assert "logging" in result  # Original section remains
 
@@ -103,9 +97,7 @@ class TestConfigMerger:
         config2 = Config({"b": {"x": 2, "y": 2}}, Path("config2.yaml"))
         config3 = Config({"b": {"y": 3, "z": 3}}, Path("config3.yaml"))
 
-        merged, conflicts = ConfigMerger.merge(
-            [config1, config2, config3], strategy="deep"
-        )
+        merged, conflicts = ConfigMerger.merge([config1, config2, config3], strategy="deep")
 
         # Check merged result
         result = merged.to_dict()
@@ -154,9 +146,7 @@ class TestConfigMerger:
 
     def test_merge_conflict_sources(self, base_config, override_config):
         """Test that merge conflicts correctly record their sources."""
-        merged, conflicts = ConfigMerger.merge(
-            [base_config, override_config], strategy="deep"
-        )
+        merged, conflicts = ConfigMerger.merge([base_config, override_config], strategy="deep")
 
         for conflict in conflicts:
             assert len(conflict.sources) == 2
@@ -289,13 +279,9 @@ class TestConfigMerger:
 
     def test_merge_conflict_with_none_values(self):
         """Test merge conflicts involving None values."""
-        config1 = Config(
-            {"nullable": None, "nested": {"value": None}}, Path("config1.yaml")
-        )
+        config1 = Config({"nullable": None, "nested": {"value": None}}, Path("config1.yaml"))
 
-        config2 = Config(
-            {"nullable": "not none", "nested": {"value": 42}}, Path("config2.yaml")
-        )
+        config2 = Config({"nullable": "not none", "nested": {"value": 42}}, Path("config2.yaml"))
 
         _, conflicts = ConfigMerger.merge([config1, config2], strategy="deep")
 

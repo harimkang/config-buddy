@@ -1,8 +1,10 @@
-import pytest
-from pathlib import Path
-from configbuddy.core.visualizer import TreeVisualizer, DiffVisualizer
-from configbuddy.core.types import ConfigDiff
 from dataclasses import dataclass
+from pathlib import Path
+
+import pytest
+
+from configbuddy.core.types import ConfigDiff
+from configbuddy.core.visualizer import DiffVisualizer, TreeVisualizer
 
 
 @dataclass
@@ -119,8 +121,8 @@ class TestTreeVisualizer:
 
     def test_tree_visualize_to_console(self, sample_config):
         """Test visualization to console output."""
-        from io import StringIO
         import sys
+        from io import StringIO
 
         # Redirect stdout to capture output
         stdout = sys.stdout
@@ -197,9 +199,7 @@ class TestDiffVisualizer:
 
     def test_empty_diff_sections(self):
         """Test visualization of diff with empty sections."""
-        empty_diff = ConfigDiff(
-            added={}, removed={}, modified={}, unchanged={"key": "value"}
-        )
+        empty_diff = ConfigDiff(added={}, removed={}, modified={}, unchanged={"key": "value"})
 
         visualizer = DiffVisualizer()
         result = visualizer.to_string(empty_diff)

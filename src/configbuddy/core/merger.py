@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 from typing import Any
+
 from .config import Config
 from .types import MergeConflict
 
@@ -22,9 +23,7 @@ class ConfigMerger:
     """
 
     @staticmethod
-    def merge(
-        configs: list[Config], strategy: str = "deep"
-    ) -> tuple[Config, list[MergeConflict]]:
+    def merge(configs: list[Config], strategy: str = "deep") -> tuple[Config, list[MergeConflict]]:
         """Merge multiple configuration files.
 
         Args:
@@ -65,9 +64,7 @@ class ConfigMerger:
         return Config(result_data), conflicts
 
     @staticmethod
-    def _deep_merge(
-        dicts: list[dict[str, Any]], sources: list[str], conflicts: list[MergeConflict]
-    ) -> dict[str, Any]:
+    def _deep_merge(dicts: list[dict[str, Any]], sources: list[str], conflicts: list[MergeConflict]) -> dict[str, Any]:
         """Recursively merge dictionaries with conflict detection.
 
         This method performs a deep merge of multiple dictionaries, recursively merging
@@ -90,14 +87,14 @@ class ConfigMerger:
 
         for key in all_keys:
             # Collect values for this key from each config
-            values = [(d.get(key), src) for d, src in zip(dicts, sources) if key in d]
+            values = [(d.get(key), src) for d, src in zip(dicts, sources, strict=False) if key in d]
 
             if len(values) == 1:
                 # No conflict: key exists in only one config
                 result[key] = values[0][0]
             else:
                 # Split values and their sources
-                vals, srcs = zip(*values)
+                vals, srcs = zip(*values, strict=False)
 
                 if all(isinstance(v, dict) for v in vals):
                     # If all values are dictionaries, merge recursively
@@ -141,14 +138,14 @@ class ConfigMerger:
 
         for key in all_keys:
             # Collect values for this key from each config
-            values = [(d.get(key), src) for d, src in zip(dicts, sources) if key in d]
+            values = [(d.get(key), src) for d, src in zip(dicts, sources, strict=False) if key in d]
 
             if len(values) == 1:
                 # No conflict
                 result[key] = values[0][0]
             else:
                 # Split values and their sources
-                vals, srcs = zip(*values)
+                vals, srcs = zip(*values, strict=False)
                 if len(set(str(v) for v in vals)) == 1:
                     # All values are identical
                     result[key] = vals[0]

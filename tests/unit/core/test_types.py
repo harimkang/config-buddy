@@ -1,4 +1,5 @@
 import pytest
+
 from configbuddy.core.types import ConfigDiff, MergeConflict
 
 
@@ -16,8 +17,8 @@ class TestConfigDiff:
     def test_diff_visualization(self, sample_diff):
         """Test visualization of configuration differences."""
         # Capture visualization output
-        from io import StringIO
         import sys
+        from io import StringIO
 
         # Redirect stdout to capture output
         stdout = sys.stdout

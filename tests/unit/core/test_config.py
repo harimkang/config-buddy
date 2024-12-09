@@ -1,6 +1,8 @@
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import pytest
+
 from configbuddy.core.config import Config
 
 
@@ -103,9 +105,7 @@ format = %%(asctime)s - %%(message)s
 
         config = Config.from_file(ini_path)
         assert config.data["database"]["host"] == "localhost"
-        assert (
-            config.data["database"]["port"] == "5432"
-        )  # INI files are read as strings
+        assert config.data["database"]["port"] == "5432"  # INI files are read as strings
         assert config.data["logging"]["level"] == "INFO"
         assert config.source == ini_path
 
@@ -158,9 +158,7 @@ format = %%(asctime)s - %%(message)s
 
     def test_merge_with(self):
         """Test merging configurations using merge_with method."""
-        config1 = Config(
-            {"database": {"host": "localhost", "port": 5432}}, Path("config1.yaml")
-        )
+        config1 = Config({"database": {"host": "localhost", "port": 5432}}, Path("config1.yaml"))
 
         config2 = Config(
             {"database": {"host": "127.0.0.1", "username": "admin"}},
@@ -176,7 +174,5 @@ format = %%(asctime)s - %%(message)s
 
         # Test shallow merge
         merged, conflicts = config1.merge_with(config2, strategy="shallow")
-        assert (
-            merged.data["database"] == config2.data["database"]
-        )  # Takes entire override section
+        assert merged.data["database"] == config2.data["database"]  # Takes entire override section
         assert len(conflicts) == 1  # Conflict for 'database'

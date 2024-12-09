@@ -2,11 +2,13 @@
 # SPDX-License-Identifier: MIT
 
 from abc import ABC, abstractmethod
+from io import StringIO
 from pathlib import Path
 from typing import Any, Protocol
-from rich.tree import Tree
+
 from rich.console import Console
-from io import StringIO
+from rich.tree import Tree
+
 from .types import ConfigDiff
 
 
@@ -22,12 +24,10 @@ class ConfigData(Protocol):
     """
 
     @property
-    def data(self) -> dict[str, Any]:
-        ...
+    def data(self) -> dict[str, Any]: ...
 
     @property
-    def source(self) -> Path | None:
-        ...
+    def source(self) -> Path | None: ...
 
 
 class BaseVisualizer(ABC):
@@ -228,9 +228,7 @@ class DiffVisualizer(BaseVisualizer):
         else:
             return str(value)
 
-    def _build_modified_tree(
-        self, tree: Tree, data: dict[str, tuple[Any, Any]]
-    ) -> None:
+    def _build_modified_tree(self, tree: Tree, data: dict[str, tuple[Any, Any]]) -> None:
         """Helper function to build a tree for modified values.
 
         Args:

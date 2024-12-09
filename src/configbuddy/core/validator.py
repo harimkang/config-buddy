@@ -1,11 +1,13 @@
 # Copyright (c) 2024 Harim Kang
 # SPDX-License-Identifier: MIT
 
+import json
+from pathlib import Path
 from typing import Any
+
 import jsonschema
 from jsonschema import Draft7Validator
-from pathlib import Path
-import json
+
 from .config import Config
 
 
@@ -48,12 +50,8 @@ class ConfigValidator:
             validator.validate(config.to_dict())
             return None
         except jsonschema.exceptions.ValidationError as e:
-            print(
-                f"Debug - Schema: {json.dumps(self.schema, indent=2)}"
-            )  # Temporary debug
-            print(
-                f"Debug - Config: {json.dumps(config.to_dict(), indent=2)}"
-            )  # Temporary debug
+            print(f"Debug - Schema: {json.dumps(self.schema, indent=2)}")  # Temporary debug
+            print(f"Debug - Config: {json.dumps(config.to_dict(), indent=2)}")  # Temporary debug
             print(f"Debug - Error: {e}")  # Temporary debug
             return [str(e)]
 
@@ -61,9 +59,7 @@ class ConfigValidator:
     def generate_schema(cls, config: Config) -> dict[str, Any]:
         """Generate a JSON schema from a configuration file."""
 
-        def _merge_types(
-            type1: dict[str, Any], type2: dict[str, Any]
-        ) -> dict[str, Any]:
+        def _merge_types(type1: dict[str, Any], type2: dict[str, Any]) -> dict[str, Any]:
             """Merge two type definitions into one."""
             if type1 == type2:
                 return type1
@@ -79,11 +75,7 @@ class ConfigValidator:
             num_type1 = get_number_type(type1)
             num_type2 = get_number_type(type2)
             if num_type1 and num_type2:
-                return {
-                    "type": "number"
-                    if "number" in (num_type1, num_type2)
-                    else "integer"
-                }
+                return {"type": "number" if "number" in (num_type1, num_type2) else "integer"}
 
             # Extract types from anyOf if present
             types1 = type1.get("anyOf", [type1])

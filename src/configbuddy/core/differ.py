@@ -17,7 +17,7 @@ class ConfigDiffer:
             other: The other configuration to compare with
 
         Returns:
-            ConfigDiff object containing the added, removed, modified and unchanged items
+            ConfigDiff object containing the added, removed, modified and unchanged item
         """
         base_dict = base.to_dict()
         other_dict = other.to_dict()
