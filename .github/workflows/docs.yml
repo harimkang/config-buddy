@@ -7,9 +7,16 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +35,22 @@ jobs:
         run: |
           cd docs
           make html
-          touch _build/html/.nojekyll  # Prevent GitHub Pages from ignoring files that begin with an underscore
+          touch _build/html/.nojekyll
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          branch: docs # The branch the action should deploy to
-          folder: docs/_build/html # The folder the action should deploy
-          clean: true # Automatically remove deleted files from the deployment branch
+          path: docs/_build/html
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
