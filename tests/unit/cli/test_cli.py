@@ -32,7 +32,7 @@ class TestCLI:
         output = StringIO()
         console = Console(file=output, force_terminal=True)
 
-        # CLI 클래스의 console 속성을 직접 패치
+        # Patch the console attribute of CLI class directly
         def mock_cli_init(self, args=None):
             self.console = console
             self.parser = self.init_parser()
@@ -40,7 +40,7 @@ class TestCLI:
             self.args = self.parser.parse_args(args)
             self.execute()
 
-        # Config와 ConfigDiff의 visualize 메서드도 패치
+        # Patch visualize methods of Config and ConfigDiff
         def mock_visualize(self):
             from configbuddy.core.visualizer import TreeVisualizer
 
@@ -53,11 +53,11 @@ class TestCLI:
             from configbuddy.core.visualizer import DiffVisualizer
 
             visualizer = DiffVisualizer()
-            tree = Tree("Configuration Differences")  # Tree 직접 생성
+            tree = Tree("Configuration Differences")  # Create Tree directly
             visualizer._build_diff_sections(tree, self)
             console.print(tree)
 
-        # version 명령어 출력도 패치
+        # Patch version command output
         def mock_version_action(self, parser, namespace, values, option_string=None):
             console.print(f"configbuddy {self.version}")
             parser.exit()
@@ -82,7 +82,7 @@ class TestCLI:
         CLI(["visualize", str(sample_config_file)])
         output = console.getvalue()
 
-        # ANSI 이스케이프 시퀀스 제거
+        # Remove ANSI escape sequences
         from re import sub
 
         output = sub(r"\x1b\[[0-9;]*m", "", output)
