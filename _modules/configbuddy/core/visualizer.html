@@ -1,0 +1,435 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>configbuddy.core.visualizer &mdash; ConfigBuddy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ConfigBuddy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ConfigBuddy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">configbuddy.core.visualizer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for configbuddy.core.visualizer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2024 Harim Kang</span>
+<span class="c1"># SPDX-License-Identifier: MIT</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Protocol</span>
+
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.tree</span> <span class="kn">import</span> <span class="n">Tree</span>
+
+<span class="kn">from</span> <span class="nn">.types</span> <span class="kn">import</span> <span class="n">ConfigDiff</span>
+
+
+<div class="viewcode-block" id="ConfigData">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.ConfigData">[docs]</a>
+<span class="k">class</span> <span class="nc">ConfigData</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Protocol for configuration data.</span>
+
+<span class="sd">    This protocol defines the required interface for configuration data objects</span>
+<span class="sd">    that can be visualized by the TreeVisualizer.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        data: Dictionary containing the configuration data</span>
+<span class="sd">        source: Optional path to the source configuration file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span></div>
+
+
+
+<div class="viewcode-block" id="BaseVisualizer">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.BaseVisualizer">[docs]</a>
+<span class="k">class</span> <span class="nc">BaseVisualizer</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for configuration visualizers.</span>
+
+<span class="sd">    This abstract class defines the interface that all visualizer implementations must follow.</span>
+<span class="sd">    It provides common functionality for displaying configuration data in different formats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseVisualizer.visualize">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.BaseVisualizer.visualize">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display data in the console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: The data to visualize. The specific type depends on the visualizer implementation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="BaseVisualizer.to_string">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.BaseVisualizer.to_string">[docs]</a>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert visualization to string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: The data to convert to string representation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            String representation of the visualized data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_create_console</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string_io</span><span class="p">:</span> <span class="n">StringIO</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Console</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a console instance for output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string_io: Optional StringIO object to write output to instead of terminal</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Console instance configured for either terminal or string output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Console</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">string_io</span><span class="p">,</span> <span class="n">force_terminal</span><span class="o">=</span><span class="kc">False</span> <span class="k">if</span> <span class="n">string_io</span> <span class="k">else</span> <span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TreeVisualizer">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.TreeVisualizer">[docs]</a>
+<span class="k">class</span> <span class="nc">TreeVisualizer</span><span class="p">(</span><span class="n">BaseVisualizer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Visualizer for configuration data in tree structure.</span>
+
+<span class="sd">    This visualizer displays configuration data as a colored tree structure,</span>
+<span class="sd">    with different colors for each level of nesting and different data types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TreeVisualizer.__init__">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.TreeVisualizer.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the TreeVisualizer with a predefined set of colors for different tree levels.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level_colors</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;turquoise2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;orchid2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;medium_spring_green&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tan&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;deep_sky_blue3&quot;</span><span class="p">,</span>
+        <span class="p">]</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_build_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to recursively build a rich.tree.Tree object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tree: The Tree object to build upon</span>
+<span class="sd">            data: Dictionary containing configuration data</span>
+<span class="sd">            depth: Current depth in the tree hierarchy (used for color selection)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">level_colors</span><span class="p">[</span><span class="n">depth</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level_colors</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="c1"># Apply level-specific color for dictionary nodes</span>
+                <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_build_tree</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="c1"># Apply level-specific color for list nodes</span>
+                <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">item_branch</span> <span class="o">=</span> <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">][</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">][/]&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_build_tree</span><span class="p">(</span><span class="n">item_branch</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Display list items in gray</span>
+                        <span class="n">formatted_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                        <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">][</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">][/]: </span><span class="si">{</span><span class="n">formatted_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Apply level color for keys and type-specific color for values</span>
+                <span class="n">formatted_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]: </span><span class="si">{</span><span class="n">formatted_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_format_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format value with appropriate color based on its type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value: The value to format</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string with rich markup for colored formatting based on the value type:</span>
+<span class="sd">            - Numbers (int/float): white</span>
+<span class="sd">            - Strings: yellow with quotes</span>
+<span class="sd">            - None: dimmed &quot;null&quot;</span>
+<span class="sd">            - Booleans: blue lowercase</span>
+<span class="sd">            - Other types: red</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[white]</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">[/]&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;[yellow]&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;[/]&#39;</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;[dim]null[/]&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[blue]</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">[/]&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[red]</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">[/]&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_create_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new Tree object with the given source as root.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            source: Optional source path to display as root node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Tree instance with formatted root node and black guide lines</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Tree</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;[bold white]</span><span class="si">{</span><span class="n">source</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;Config&#39;</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">,</span>
+            <span class="n">guide_style</span><span class="o">=</span><span class="s2">&quot;bright_black&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="TreeVisualizer.visualize">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.TreeVisualizer.visualize">[docs]</a>
+    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConfigData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display the configuration data as a tree in the console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Configuration data object implementing the ConfigData protocol</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_console</span><span class="p">()</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tree</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TreeVisualizer.to_string">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.TreeVisualizer.to_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">ConfigData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the configuration tree visualization to a string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Configuration data object implementing the ConfigData protocol</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            String representation of the configuration tree visualization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">string_io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">string_io</span><span class="p">,</span> <span class="n">force_terminal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tree</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string_io</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DiffVisualizer">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.DiffVisualizer">[docs]</a>
+<span class="k">class</span> <span class="nc">DiffVisualizer</span><span class="p">(</span><span class="n">BaseVisualizer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Visualizer for configuration differences.</span>
+
+<span class="sd">    This visualizer displays the differences between two configurations,</span>
+<span class="sd">    highlighting added, removed, and modified values in different colors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_build_diff_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to recursively build a diff tree with specified style.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tree: The Tree object to build upon</span>
+<span class="sd">            data: Dictionary containing diff data</span>
+<span class="sd">            style: Color style to apply to the nodes (e.g., &quot;green&quot; for additions)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_tree</span><span class="p">(</span><span class="n">branch</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="n">item_branch</span> <span class="o">=</span> <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">][</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">][/]&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_tree</span><span class="p">(</span><span class="n">item_branch</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">][</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_format_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format value with appropriate color based on its type.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;null&quot;</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_modified_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to build a tree for modified values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tree: The Tree object to build upon</span>
+<span class="sd">            data: Dictionary containing pairs of old and new values</span>
+<span class="sd">                 where key maps to tuple of (old_value, new_value)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">branch</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[yellow]</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[red]- </span><span class="si">{</span><span class="n">old</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[green]+ </span><span class="si">{</span><span class="n">new</span><span class="si">}</span><span class="s2">[/]&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DiffVisualizer.visualize">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.DiffVisualizer.visualize">[docs]</a>
+    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">:</span> <span class="n">ConfigDiff</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display the configuration differences in the console.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            diff: ConfigDiff object containing added, removed, modified, and unchanged items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_console</span><span class="p">()</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s2">&quot;Configuration Differences&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_sections</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DiffVisualizer.to_string">
+<a class="viewcode-back" href="../../../api.html#configbuddy.core.visualizer.DiffVisualizer.to_string">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">:</span> <span class="n">ConfigDiff</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the configuration differences visualization to a string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            diff: ConfigDiff object containing added, removed, modified, and unchanged items</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            String representation of the configuration differences visualization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">string_io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_console</span><span class="p">(</span><span class="n">string_io</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s2">&quot;Configuration Differences&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_sections</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string_io</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_build_diff_sections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">:</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">diff</span><span class="p">:</span> <span class="n">ConfigDiff</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build all sections of the diff tree.</span>
+
+<span class="sd">        Creates separate sections for added (green), removed (red), and modified (yellow) items.</span>
+<span class="sd">        Each section is color-coded and contains the respective changes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tree: The Tree object to build upon</span>
+<span class="sd">            diff: ConfigDiff object containing the differences to visualize</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">diff</span><span class="o">.</span><span class="n">added</span><span class="p">:</span>
+            <span class="n">added</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;[green]Added[/]&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_tree</span><span class="p">(</span><span class="n">added</span><span class="p">,</span> <span class="n">diff</span><span class="o">.</span><span class="n">added</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">diff</span><span class="o">.</span><span class="n">removed</span><span class="p">:</span>
+            <span class="n">removed</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;[red]Removed[/]&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_diff_tree</span><span class="p">(</span><span class="n">removed</span><span class="p">,</span> <span class="n">diff</span><span class="o">.</span><span class="n">removed</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">diff</span><span class="o">.</span><span class="n">modified</span><span class="p">:</span>
+            <span class="n">modified</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;[yellow]Modified[/]&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_build_modified_tree</span><span class="p">(</span><span class="n">modified</span><span class="p">,</span> <span class="n">diff</span><span class="o">.</span><span class="n">modified</span><span class="p">)</span></div>
+
+
+        <span class="c1"># TODO: How to visualize unchanged?</span>
+        <span class="c1"># if diff.unchanged:</span>
+        <span class="c1">#     unchanged = tree.add(&quot;[bright_black]Unchanged[/]&quot;)</span>
+        <span class="c1">#     self._build_diff_tree(unchanged, diff.unchanged, &quot;bright_black&quot;)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Harim Kang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

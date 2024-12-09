@@ -1,0 +1,875 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; ConfigBuddy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing Guide" href="contributing.html" />
+    <link rel="prev" title="Command Line Interface" href="cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ConfigBuddy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-classes">Core Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-configbuddy.core.config">Config</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configdiff">ConfigDiff</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.config.ConfigDiff"><code class="docutils literal notranslate"><span class="pre">ConfigDiff</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-configbuddy.core.merger">ConfigMerger</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.merger.ConfigMerger"><code class="docutils literal notranslate"><span class="pre">ConfigMerger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-configbuddy.core.validator">ConfigValidator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.validator.ConfigValidator"><code class="docutils literal notranslate"><span class="pre">ConfigValidator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-configbuddy.core.visualizer">Visualizer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.visualizer.BaseVisualizer"><code class="docutils literal notranslate"><span class="pre">BaseVisualizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.visualizer.ConfigData"><code class="docutils literal notranslate"><span class="pre">ConfigData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.visualizer.DiffVisualizer"><code class="docutils literal notranslate"><span class="pre">DiffVisualizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.visualizer.TreeVisualizer"><code class="docutils literal notranslate"><span class="pre">TreeVisualizer</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-configbuddy.core.types">Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff"><code class="docutils literal notranslate"><span class="pre">ConfigDiff</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.added"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.added</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.removed"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.removed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.modified"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.unchanged"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.unchanged</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.__str__"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.added</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.removed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.unchanged</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff.visualize"><code class="docutils literal notranslate"><span class="pre">ConfigDiff.visualize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configbuddy.core.types.MergeConflict"><code class="docutils literal notranslate"><span class="pre">MergeConflict</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.MergeConflict.key"><code class="docutils literal notranslate"><span class="pre">MergeConflict.key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.MergeConflict.values"><code class="docutils literal notranslate"><span class="pre">MergeConflict.values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.core.types.MergeConflict.sources"><code class="docutils literal notranslate"><span class="pre">MergeConflict.sources</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">MergeConflict.key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11"><code class="docutils literal notranslate"><span class="pre">MergeConflict.sources</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">MergeConflict.values</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-configbuddy.cli.cli">CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configbuddy.cli.cli.CLI"><code class="docutils literal notranslate"><span class="pre">CLI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.cli.cli.CLI.add_subcommands"><code class="docutils literal notranslate"><span class="pre">CLI.add_subcommands()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.cli.cli.CLI.execute"><code class="docutils literal notranslate"><span class="pre">CLI.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configbuddy.cli.cli.CLI.init_parser"><code class="docutils literal notranslate"><span class="pre">CLI.init_parser()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ConfigBuddy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This section provides detailed API documentation for ConfigBuddy.</p>
+<section id="core-classes">
+<h2>Core Classes<a class="headerlink" href="#core-classes" title="Link to this heading"></a></h2>
+<section id="module-configbuddy.core.config">
+<span id="config"></span><h3>Config<a class="headerlink" href="#module-configbuddy.core.config" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for representing configuration file contents.</p>
+<p>This class provides functionality to load, save, and visualize configuration data
+from various file formats including YAML, JSON, and INI.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.__str__" title="Link to this definition"></a></dt>
+<dd><p>Convert configuration to a string representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>String representation of the configuration in a tree structure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.diff_with">
+<span class="sig-name descname"><span class="pre">diff_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.diff_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.diff_with" title="Link to this definition"></a></dt>
+<dd><p>Compare this configuration with another using ConfigDiffer.</p>
+<p>A convenience method that uses ConfigDiffer to analyze differences
+between this configuration and another one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.config.Config" title="configbuddy.core.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span>) – Another Config object to compare with</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff" title="configbuddy.core.types.ConfigDiff"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDiff</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ConfigDiff object containing the differences between configurations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.from_file" title="Link to this definition"></a></dt>
+<dd><p>Create a Config object from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></span>) – Path to the configuration file. Can be a string or Path object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.config.Config" title="configbuddy.core.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new Config instance containing the loaded configuration data.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the file format is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'deep'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.merge_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.merge_with" title="Link to this definition"></a></dt>
+<dd><p>Merge this configuration with another using ConfigMerger.</p>
+<p>A convenience method that uses ConfigMerger to merge this configuration
+with another one. Similar to diff_with, but for merging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.config.Config" title="configbuddy.core.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span>) – Another Config object to merge with</p></li>
+<li><p><strong>strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Merge strategy to use (‘deep’ or ‘shallow’)
+‘deep’ recursively merges nested dictionaries
+‘shallow’ only merges top-level keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Config: The merged configuration object</p></li>
+<li><p>list[MergeConflict]: List of merge conflicts detected during merging</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config1</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s1">&#39;base.yaml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config2</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s1">&#39;override.yaml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">merged</span><span class="p">,</span> <span class="n">conflicts</span> <span class="o">=</span> <span class="n">config1</span><span class="o">.</span><span class="n">merge_with</span><span class="p">(</span><span class="n">config2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">conflicts</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Merge conflicts detected:&quot;</span><span class="p">,</span> <span class="n">conflicts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">merged</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;merged.yaml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.save" title="Link to this definition"></a></dt>
+<dd><p>Save configuration to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span>) – Path where to save the configuration. If None, uses the source path.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If no path is specified and source is None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert configuration to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary representation of the configuration data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate configuration against a JSON schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schema_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></span>) – Path to the JSON schema file.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of validation errors or None if no errors are found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.Config.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/config.html#Config.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.Config.visualize" title="Link to this definition"></a></dt>
+<dd><p>Visualize configuration in a tree structure.</p>
+<p>Displays the configuration data as a hierarchical tree in the console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="configdiff">
+<h3>ConfigDiff<a class="headerlink" href="#configdiff" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.config.</span></span><span class="sig-name descname"><span class="pre">ConfigDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">added</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unchanged</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.ConfigDiff" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing differences between configuration files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.added">
+<span class="sig-name descname"><span class="pre">added</span></span><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.added" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that were added in the new config</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.removed">
+<span class="sig-name descname"><span class="pre">removed</span></span><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.removed" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that were removed from the base config</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.modified">
+<span class="sig-name descname"><span class="pre">modified</span></span><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.modified" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys mapping to tuples of (old_value, new_value)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.unchanged">
+<span class="sig-name descname"><span class="pre">unchanged</span></span><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.unchanged" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that remained the same</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the configuration differences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">added</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">modified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]]</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">removed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">unchanged</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.config.ConfigDiff.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.config.ConfigDiff.visualize" title="Link to this definition"></a></dt>
+<dd><p>Visualize the configuration differences in a tree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-configbuddy.core.merger">
+<span id="configmerger"></span><h3>ConfigMerger<a class="headerlink" href="#module-configbuddy.core.merger" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.merger.ConfigMerger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.merger.</span></span><span class="sig-name descname"><span class="pre">ConfigMerger</span></span><a class="reference internal" href="_modules/configbuddy/core/merger.html#ConfigMerger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.merger.ConfigMerger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class for merging multiple configuration files.</p>
+<p>This class provides functionality to merge multiple Config objects,
+with support for different merge strategies and conflict detection.</p>
+<p>The merger supports two strategies:
+- deep: Recursively merges nested dictionaries
+- shallow: Only merges top-level keys</p>
+<p>When conflicts are detected during merging, they are tracked and returned
+along with the merged result. A conflict occurs when multiple configs have
+different values for the same key.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.merger.ConfigMerger.merge">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'deep'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/merger.html#ConfigMerger.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.merger.ConfigMerger.merge" title="Link to this definition"></a></dt>
+<dd><p>Merge multiple configuration files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>configs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#configbuddy.core.config.Config" title="configbuddy.core.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a>]</span>) – List of Config objects to merge. Must contain at least one config.</p></li>
+<li><p><strong>strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Merge strategy to use. Can be either ‘deep’ or ‘shallow’.
+‘deep’ recursively merges nested dictionaries.
+‘shallow’ only merges top-level keys.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Config: The merged configuration object</p></li>
+<li><p>list[MergeConflict]: List of merge conflicts detected during merging</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If no configs provided or if strategy is not ‘deep’ or ‘shallow’</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-configbuddy.core.validator">
+<span id="configvalidator"></span><h3>ConfigValidator<a class="headerlink" href="#module-configbuddy.core.validator" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.validator.</span></span><span class="sig-name descname"><span class="pre">ConfigValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class for validating configuration files.</p>
+<p>This class provides functionality to validate configuration data against a JSON schema.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize validator with a schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schema</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span>) – JSON schema dictionary to validate against</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>jsonschema.exceptions.SchemaError</strong> – If the schema itself is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.from_config" title="Link to this definition"></a></dt>
+<dd><p>Create a validator from an existing configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.config.Config" title="configbuddy.core.config.Config"><code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code></a></span>) – Configuration object to generate schema from</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.validator.ConfigValidator" title="configbuddy.core.validator.ConfigValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigValidator</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ConfigValidator instance with schema generated from config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.from_file" title="Link to this definition"></a></dt>
+<dd><p>Create a validator from a schema file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schema_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></span>) – Path to the JSON schema file</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.validator.ConfigValidator" title="configbuddy.core.validator.ConfigValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigValidator</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ConfigValidator instance initialized with the schema from file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.generate_schema">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.generate_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.generate_schema" title="Link to this definition"></a></dt>
+<dd><p>Generate a JSON schema from a configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.save_schema">
+<span class="sig-name descname"><span class="pre">save_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.save_schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.save_schema" title="Link to this definition"></a></dt>
+<dd><p>Save the current schema to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></a></span>) – Path where to save the schema</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.validator.ConfigValidator.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/validator.html#ConfigValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.validator.ConfigValidator.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate a configuration against the schema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-configbuddy.core.visualizer">
+<span id="visualizer"></span><h3>Visualizer<a class="headerlink" href="#module-configbuddy.core.visualizer" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.BaseVisualizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.visualizer.</span></span><span class="sig-name descname"><span class="pre">BaseVisualizer</span></span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#BaseVisualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.BaseVisualizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Base class for configuration visualizers.</p>
+<p>This abstract class defines the interface that all visualizer implementations must follow.
+It provides common functionality for displaying configuration data in different formats.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.BaseVisualizer.to_string">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#BaseVisualizer.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.BaseVisualizer.to_string" title="Link to this definition"></a></dt>
+<dd><p>Convert visualization to string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – The data to convert to string representation</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String representation of the visualized data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.BaseVisualizer.visualize">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#BaseVisualizer.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.BaseVisualizer.visualize" title="Link to this definition"></a></dt>
+<dd><p>Display data in the console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – The data to visualize. The specific type depends on the visualizer implementation.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.ConfigData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.visualizer.</span></span><span class="sig-name descname"><span class="pre">ConfigData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#ConfigData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.ConfigData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Protocol for configuration data.</p>
+<p>This protocol defines the required interface for configuration data objects
+that can be visualized by the TreeVisualizer.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.ConfigData.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#configbuddy.core.visualizer.ConfigData.data" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing the configuration data</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.ConfigData.source">
+<span class="sig-name descname"><span class="pre">source</span></span><a class="headerlink" href="#configbuddy.core.visualizer.ConfigData.source" title="Link to this definition"></a></dt>
+<dd><p>Optional path to the source configuration file</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.DiffVisualizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.visualizer.</span></span><span class="sig-name descname"><span class="pre">DiffVisualizer</span></span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#DiffVisualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.DiffVisualizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#configbuddy.core.visualizer.BaseVisualizer" title="configbuddy.core.visualizer.BaseVisualizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVisualizer</span></code></a></p>
+<p>Visualizer for configuration differences.</p>
+<p>This visualizer displays the differences between two configurations,
+highlighting added, removed, and modified values in different colors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.DiffVisualizer.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#DiffVisualizer.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.DiffVisualizer.to_string" title="Link to this definition"></a></dt>
+<dd><p>Convert the configuration differences visualization to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>diff</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff" title="configbuddy.core.types.ConfigDiff"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDiff</span></code></a></span>) – ConfigDiff object containing added, removed, modified, and unchanged items</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String representation of the configuration differences visualization</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.DiffVisualizer.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#DiffVisualizer.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.DiffVisualizer.visualize" title="Link to this definition"></a></dt>
+<dd><p>Display the configuration differences in the console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>diff</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.types.ConfigDiff" title="configbuddy.core.types.ConfigDiff"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigDiff</span></code></a></span>) – ConfigDiff object containing added, removed, modified, and unchanged items</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.TreeVisualizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.visualizer.</span></span><span class="sig-name descname"><span class="pre">TreeVisualizer</span></span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#TreeVisualizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.TreeVisualizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#configbuddy.core.visualizer.BaseVisualizer" title="configbuddy.core.visualizer.BaseVisualizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseVisualizer</span></code></a></p>
+<p>Visualizer for configuration data in tree structure.</p>
+<p>This visualizer displays configuration data as a colored tree structure,
+with different colors for each level of nesting and different data types.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.TreeVisualizer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#TreeVisualizer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.TreeVisualizer.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the TreeVisualizer with a predefined set of colors for different tree levels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.TreeVisualizer.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#TreeVisualizer.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.TreeVisualizer.to_string" title="Link to this definition"></a></dt>
+<dd><p>Convert the configuration tree visualization to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.visualizer.ConfigData" title="configbuddy.core.visualizer.ConfigData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigData</span></code></a></span>) – Configuration data object implementing the ConfigData protocol</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>String representation of the configuration tree visualization</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.visualizer.TreeVisualizer.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/visualizer.html#TreeVisualizer.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.visualizer.TreeVisualizer.visualize" title="Link to this definition"></a></dt>
+<dd><p>Display the configuration data as a tree in the console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#configbuddy.core.visualizer.ConfigData" title="configbuddy.core.visualizer.ConfigData"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigData</span></code></a></span>) – Configuration data object implementing the ConfigData protocol</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-configbuddy.core.types">
+<span id="types"></span><h2>Types<a class="headerlink" href="#module-configbuddy.core.types" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.types.</span></span><span class="sig-name descname"><span class="pre">ConfigDiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">added</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unchanged</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.types.ConfigDiff" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing differences between configuration files.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.added">
+<span class="sig-name descname"><span class="pre">added</span></span><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.added" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that were added in the new config</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.removed">
+<span class="sig-name descname"><span class="pre">removed</span></span><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.removed" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that were removed from the base config</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.modified">
+<span class="sig-name descname"><span class="pre">modified</span></span><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.modified" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys mapping to tuples of (old_value, new_value)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.unchanged">
+<span class="sig-name descname"><span class="pre">unchanged</span></span><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.unchanged" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of keys and values that remained the same</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of the configuration differences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">added</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">modified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]]</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">removed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">unchanged</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.core.types.ConfigDiff.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#ConfigDiff.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.types.ConfigDiff.visualize" title="Link to this definition"></a></dt>
+<dd><p>Visualize the configuration differences in a tree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.core.types.MergeConflict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.core.types.</span></span><span class="sig-name descname"><span class="pre">MergeConflict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sources</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/core/types.html#MergeConflict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.core.types.MergeConflict" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class representing a merge conflict between configurations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.MergeConflict.key">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#configbuddy.core.types.MergeConflict.key" title="Link to this definition"></a></dt>
+<dd><p>The configuration key where the conflict occurred</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.MergeConflict.values">
+<span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#configbuddy.core.types.MergeConflict.values" title="Link to this definition"></a></dt>
+<dd><p>List of conflicting values from different sources</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="configbuddy.core.types.MergeConflict.sources">
+<span class="sig-name descname"><span class="pre">sources</span></span><a class="headerlink" href="#configbuddy.core.types.MergeConflict.sources" title="Link to this definition"></a></dt>
+<dd><p>List of source identifiers where the conflicting values came from</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">sources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-configbuddy.cli.cli">
+<span id="cli"></span><h2>CLI<a class="headerlink" href="#module-configbuddy.cli.cli" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="configbuddy.cli.cli.CLI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">configbuddy.cli.cli.</span></span><span class="sig-name descname"><span class="pre">CLI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/cli/cli.html#CLI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.cli.cli.CLI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.cli.cli.CLI.add_subcommands">
+<span class="sig-name descname"><span class="pre">add_subcommands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/cli/cli.html#CLI.add_subcommands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.cli.cli.CLI.add_subcommands" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.cli.cli.CLI.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/cli/cli.html#CLI.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.cli.cli.CLI.execute" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="configbuddy.cli.cli.CLI.init_parser">
+<span class="sig-name descname"><span class="pre">init_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configbuddy/cli/cli.html#CLI.init_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configbuddy.cli.cli.CLI.init_parser" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cli.html" class="btn btn-neutral float-left" title="Command Line Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Harim Kang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

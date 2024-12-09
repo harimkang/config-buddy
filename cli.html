@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Line Interface &mdash; ConfigBuddy 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Quickstart Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ConfigBuddy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#visualize">visualize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diff">diff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge">merge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validate">validate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-schema">generate-schema</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#global-options">Global Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ConfigBuddy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Command Line Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cli.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-interface">
+<h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Link to this heading"></a></h1>
+<p>ConfigBuddy provides a powerful command-line interface (CLI) for managing configuration files.</p>
+<section id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h2>
+<section id="visualize">
+<h3>visualize<a class="headerlink" href="#visualize" title="Link to this heading"></a></h3>
+<p>Visualize a configuration file in a tree format:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>visualize<span class="w"> </span>&lt;config_file&gt;
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--style</span></code>: Tree style (ascii, bold, double, or rounded)</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="diff">
+<h3>diff<a class="headerlink" href="#diff" title="Link to this heading"></a></h3>
+<p>Compare two configuration files and show their differences:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>diff<span class="w"> </span>&lt;base_file&gt;<span class="w"> </span>--compare<span class="w"> </span>&lt;other_file&gt;
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--style</span></code>: Tree style for visualization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--output-format</span></code>: Output format (tree or json)</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="merge">
+<h3>merge<a class="headerlink" href="#merge" title="Link to this heading"></a></h3>
+<p>Merge two configuration files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>merge<span class="w"> </span>&lt;base_file&gt;<span class="w"> </span>&lt;override_file&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;output_file&gt;
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--strategy</span></code>: Merge strategy (deep or shallow)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-o,</span> <span class="pre">--output</span></code>: Output file path</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="validate">
+<h3>validate<a class="headerlink" href="#validate" title="Link to this heading"></a></h3>
+<p>Validate a configuration file against a JSON schema:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>validate<span class="w"> </span>&lt;config_file&gt;<span class="w"> </span>--schema<span class="w"> </span>&lt;schema_file&gt;
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--schema</span></code>: JSON schema file path</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="generate-schema">
+<h3>generate-schema<a class="headerlink" href="#generate-schema" title="Link to this heading"></a></h3>
+<p>Generate a JSON schema from a configuration file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>generate-schema<span class="w"> </span>&lt;config_file&gt;<span class="w"> </span>-o<span class="w"> </span>&lt;schema_file&gt;
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-o,</span> <span class="pre">--output</span></code>: Output schema file path</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="global-options">
+<h2>Global Options<a class="headerlink" href="#global-options" title="Link to this heading"></a></h2>
+<p>These options are available for all commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code>: Show help message</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--version</span></code>: Show version information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--verbose</span></code>: Enable verbose output</p></li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Visualize a YAML configuration with rounded style:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>visualize<span class="w"> </span>config.yaml<span class="w"> </span>--style<span class="w"> </span>rounded
+</pre></div>
+</div>
+</li>
+<li><p>Compare configurations and output as JSON:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>diff<span class="w"> </span>base.yaml<span class="w"> </span>--compare<span class="w"> </span>other.yaml<span class="w"> </span>--output-format<span class="w"> </span>json
+</pre></div>
+</div>
+</li>
+<li><p>Merge configurations with deep strategy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>merge<span class="w"> </span>base.yaml<span class="w"> </span>override.yaml<span class="w"> </span>-o<span class="w"> </span>merged.yaml<span class="w"> </span>--strategy<span class="w"> </span>deep
+</pre></div>
+</div>
+</li>
+<li><p>Validate configuration against schema:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>configbuddy<span class="w"> </span>validate<span class="w"> </span>config.yaml<span class="w"> </span>--schema<span class="w"> </span>schema.json
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Harim Kang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
