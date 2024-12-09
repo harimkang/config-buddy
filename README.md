@@ -1,4 +1,4 @@
-# 🛠️ ConfigBuddy
+# 📄 ConfigBuddy
 
 > Manage your configuration files with elegance! 🎨
 
@@ -22,7 +22,47 @@
 pip install configbuddy
 ```
 
-### Basic Usage
+### CLI Usage
+
+ConfigBuddy provides a powerful CLI interface for managing your configuration files:
+
+#### Visualize Configuration
+
+```bash
+configbuddy visualize config.yaml
+```
+
+![Visualize Command](docs/utils/images/visualize.png)
+
+#### Compare Configurations
+
+```bash
+configbuddy diff base.yaml --compare other.yaml
+```
+
+![Diff Command](docs/utils/images/diff.png)
+
+#### Merge Configurations
+
+```bash
+configbuddy merge base.yaml override.yaml -o merged.yaml
+```
+
+![Merge Command](docs/utils/images/merge.png)
+
+#### Validate Configuration
+
+```bash
+configbuddy validate config.yaml --schema schema.json
+```
+
+#### Generate Schema
+
+```bash
+configbuddy generate-schema config.yaml -o schema.json
+```
+
+### Python API Usage
 
 ```python
 from configbuddy import Config
@@ -102,7 +142,7 @@ config.yaml
 
 ## 🛣️ Roadmap
 
-- [ ] CLI interface
+- [x] CLI interface
 - [ ] PyPi Upload
 - [ ] Comment preservation
 - [ ] XML/TOML support
