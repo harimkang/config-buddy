@@ -5,7 +5,6 @@
 [![PyPI version](https://badge.fury.io/py/configbuddy.svg)](https://badge.fury.io/py/configbuddy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Versions](https://img.shields.io/pypi/pyversions/configbuddy.svg)](https://pypi.org/project/configbuddy/)
-[![Tests](https://github.com/harimkang/configbuddy/actions/workflows/test.yml/badge.svg)](https://github.com/harimkang/configbuddy/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/harimkang/configbuddy/branch/main/graph/badge.svg)](https://codecov.io/gh/harimkang/configbuddy)
 
 ## ✨ Features
